@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-router.use('/list-of-sellers', require('./api'))
-router.use('/seller-catalog', require('./api'))
-router.use('/create-order', require('./api'))
+router.use('/list-of-sellers', require('./sellerList'))
+router.use('/seller-catalog', require('./sellerCatalog'))
+router.use('/create-order', require('./createOrder'))
 
 module.exports = router;
