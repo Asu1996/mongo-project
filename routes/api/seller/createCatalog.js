@@ -4,16 +4,19 @@ const { addItem, findItem, updateItem } = require('../../../db/utils/mongoApi')
 router.post('/', async (req, res, next) => {
   const {
     body: { productsInCatalog },
-    userId,
+    userId: sellerId,
   } = req
   try {
-    const exisitngCatalog = await findItem('catalogs', { userId })
-    if (exisitngCatalog) {
-      await updateItem('catalogs', { userId }, { productsInCatalog })
-    } else {
-      await addItem('catalogs', { userId, productsInCatalog })
+    if (!productsInCatalog) {
+      return res.status(400).send({ success: false, message: 'productsInCatalog key is required.' })
     }
-    return res.send({ userId, ...req.body })
+    const exisitngCatalog = await findItem('catalogs', { sellerId })
+    if (exisitngCatalog) {
+      await updateItem('catalogs', { sellerId }, { productsInCatalog })
+    } else {
+      await addItem('catalogs', { sellerId, productsInCatalog })
+    }
+    return res.send({ sellerId, ...req.body })
   } catch (e) {
     return next(e)
   }
@@ -21,4 +24,3 @@ router.post('/', async (req, res, next) => {
 
 module.exports = router
 
-// ADD CHECK IF SOMETHING NOT ENTERED!!

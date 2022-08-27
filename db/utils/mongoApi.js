@@ -35,7 +35,7 @@ const findItem = async (collection, condition) => {
 }
 
 const updateItem = async (collection, condition, update) => {
-  const updateUrl = `${baseUrl}/action/findOne`
+  const updateUrl = `${baseUrl}/action/updateOne`
   const reqData = { ...dbParams, collection, filter: condition, update: { '$set': update } }
   await axios.post(updateUrl, reqData, reqHeaders)
 }

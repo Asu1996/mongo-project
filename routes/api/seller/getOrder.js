@@ -1,18 +1,16 @@
 const router = require('express').Router()
-const { addItem, findItem, updateItem, findMany } = require('../../../db/utils/mongoApi')
+const { findMany } = require('../../../db/utils/mongoApi')
 
 router.get('/', async (req, res, next) => {
   const {
-    userId,
+    userId: sellerId,
   } = req
   try {
-    const exisitngOrders = findMany('orders', { userId })
-    return res.send({ exisitngOrders })
+    const exisitngOrders = await findMany('orders', { sellerId })
+    return res.send({ orders: exisitngOrders })
   } catch (e) {
     return next(e)
   }
 })
 
 module.exports = router
-
-// ADD CHECK IF SOMETHING NOT ENTERED!!
