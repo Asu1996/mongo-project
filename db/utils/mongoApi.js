@@ -20,6 +20,13 @@ const addItem = async (collection, data) => {
   await axios.post(insertUrl, reqData, reqHeaders)
 }
 
+const findMany = async (collection, condition) => {
+  const findUrl = `${baseUrl}/action/find`
+  const reqData = { ...dbParams, collection, filter: condition }
+  const { data: { documents } } = await axios.post(findUrl, reqData, reqHeaders)
+  return documents;
+}
+
 const findItem = async (collection, condition) => {
   const findUrl = `${baseUrl}/action/findOne`
   const reqData = { ...dbParams, collection, filter: condition }
@@ -33,4 +40,4 @@ const updateItem = async (collection, condition, update) => {
   await axios.post(updateUrl, reqData, reqHeaders)
 }
 
-module.exports = { addItem, findItem, updateItem }
+module.exports = { addItem, findItem, updateItem, findMany }
